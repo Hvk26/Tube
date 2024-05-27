@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import connectDB from "./db/index.js"
 import express from "express"
 import cors from "cors"
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser" // cookie-parser is some kind of middleware it is used to get certain kind of permission
 
 const app = express();
 
@@ -14,8 +14,8 @@ dotenv.config({
 
 //CORS configuration (app.use is used for all kind of configuration in express)
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
+    origin: process.env.CORS_ORIGIN, // this is the origin link that is taken from environment variables
+    credentials: true // this is to make the credentials true
 }));
 
 //express configuration

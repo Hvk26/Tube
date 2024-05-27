@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
   },
-  "author": "Harshvardhan",
+  "author": "Harshvardhan Kumar",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.0",
