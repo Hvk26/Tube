@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import connectDB from "./db/index.js"
 import express from "express"
 import cors from "cors"
-import cookieParser from "cookie-parser" // cookie-parser is some kind of middleware it is used to get certain kind of permission
+import cookieParser from "cookie-parser" // cookie-parser is a kind of middleware it is used to get certain kind of permission
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(express.static("public")); // to store some data from users into local p
 app.use(cookieParser());
 
 connectDB()
-//promise verification for debugging purpose
+//promise verification for debugging purpose and it is considered as industry standard practice
 .then(()=>{
 
     app.on("error", ()=>{
