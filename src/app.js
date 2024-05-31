@@ -17,3 +17,5 @@ app.use(express.static("public")); // to store some data from users into local p
 
 //cookie-parser configuration
 app.use(cookieParser());
+
+export {app};
