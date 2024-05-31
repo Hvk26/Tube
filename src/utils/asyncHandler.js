@@ -1,4 +1,4 @@
-// this async handler is being used to handle all the promises and exportes as frequent used function
+// this async handler is being used to handle all the promises and exports as frequent used function
 
 const asyncHandler = (requestHandler)=>{(req, res, next)=>{
     Promise.resolve(requestHandler(req, res, next)).catch((error)=>next(error))
