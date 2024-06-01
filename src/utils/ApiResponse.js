@@ -8,3 +8,5 @@ class ApiResponse {
         this.success = statusCode < 400; // this range is defined to follow a proffesional format according to MDN
     }
 }
+
+export {ApiResponse};
