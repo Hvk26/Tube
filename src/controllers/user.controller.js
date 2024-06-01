@@ -60,6 +60,10 @@ const registerUser = asyncHandler(async (req, res)=>{
     const checkUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
+
+    if(!checkUser){
+        throw new ApiError(500, "Something went wrong while registering the user");
+    }
 })
 
 export {registerUser};
