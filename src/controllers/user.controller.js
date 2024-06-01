@@ -43,6 +43,10 @@ const registerUser = asyncHandler(async (req, res)=>{
     const avatar = uploadOnCloudinary(avatarLocalPath);
     const converImage = uploadOnCloudinary(converImageLocalPath);
 
+    if(!avatar){
+        throw new ApiError(400, "Avatar image is required");
+    }
+
 })
 
 export {registerUser};
