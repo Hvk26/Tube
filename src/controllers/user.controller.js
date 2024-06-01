@@ -57,9 +57,9 @@ const registerUser = asyncHandler(async (req, res)=>{
         converImage: converImage?.url || ""
     });
     
-    // const checkUser = await User.findById(user._id).select(
-    //     "-password -refreshToken"
-    // )
+    const checkUser = await User.findById(user._id).select(
+        "-password -refreshToken"
+    )
 })
 
 export {registerUser};
