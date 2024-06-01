@@ -18,4 +18,15 @@ app.use(express.static("public")); // to store some data from users into local p
 //cookie-parser configuration
 app.use(cookieParser());
 
+
+//importing routes
+import userRouter from "./routes/user.routes.js";
+
+
+
+
+
+//declaring routes
+app.use("/user", userRouter);
+
 export {app};
