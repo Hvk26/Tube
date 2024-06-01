@@ -1,4 +1,5 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
+import {ApiError} from "./ApiError.js"
 
 const registerUser = asyncHandler(async (req, res)=>{
     // 1. take input from the frontend using a form
@@ -16,6 +17,11 @@ const registerUser = asyncHandler(async (req, res)=>{
     console.log("fullname: ", fullname);
     console.log("email: ", email);
     console.log("password: ", password);
+
+    // Here one can use simple switch or if else case to check for the empty fields
+    if([username, email, fullname, password].some((fields)=>fields?.trim() === "")){
+        throw new ApiError(400, "All fields are required");
+    }
 })
 
 export {registerUser};
