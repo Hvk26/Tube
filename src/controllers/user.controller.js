@@ -1,5 +1,6 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {ApiError} from "./ApiError.js"
+import {User} from "../models/user.model.js"
 
 const registerUser = asyncHandler(async (req, res)=>{
     // 1. take input from the frontend using a form
@@ -21,6 +22,14 @@ const registerUser = asyncHandler(async (req, res)=>{
     // Here one can use simple switch or if else case to check for the empty fields
     if([username, email, fullname, password].some((fields)=>fields?.trim() === "")){
         throw new ApiError(400, "All fields are required");
+    }
+
+    const existedUser =  User.findOne({
+        $or:[{username}, {email}]
+    });
+
+    if(existedUser){
+        throw new ApiError(409, "User already exists");
     }
 })
 
