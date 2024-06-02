@@ -52,7 +52,6 @@ const registerUser = asyncHandler(async (req, res)=>{
         email,
         username: username.toLowerCase(),
         fullname,
-        email,
         password,
         avatar: avatar.url,
         converImage: converImage?.url || ""
