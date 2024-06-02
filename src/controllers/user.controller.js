@@ -35,14 +35,14 @@ const registerUser = asyncHandler(async (req, res)=>{
     }
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const converImageLocalPath = req.files?.converImage[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar image is required");
     }
     
-    const avatar = uploadOnCloudinary(avatarLocalPath);
-    const converImage = uploadOnCloudinary(converImageLocalPath);
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
     if(!avatar){
         throw new ApiError(400, "Avatar image is required");
@@ -54,14 +54,14 @@ const registerUser = asyncHandler(async (req, res)=>{
         fullname,
         password,
         avatar: avatar.url,
-        converImage: converImage?.url || ""
+        coverImage: coverImage?.url || ""
     });
     
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     );
 
-    if(!checkUser){
+    if(!createdUser){
         throw new ApiError(500, "Something went wrong while registering the user");
     }
 
