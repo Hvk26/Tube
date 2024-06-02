@@ -14,12 +14,13 @@ const registerUser = asyncHandler(async (req, res)=>{
     // 7. check for user creation
     // 8. return response
 
+    console.log(req.body);
 
     const {username, email, fullname, password} = req.body;
-    console.log("username: ", username);
-    console.log("fullname: ", fullname);
-    console.log("email: ", email);
-    console.log("password: ", password);
+    // console.log("username: ", username);
+    // console.log("fullname: ", fullname);
+    // console.log("email: ", email);
+    // console.log("password: ", password);
 
     // Here one can use simple switch or if else case to check for the empty fields
     if([username, email, fullname, password].some((fields)=>fields?.trim() === "")){
@@ -34,8 +35,17 @@ const registerUser = asyncHandler(async (req, res)=>{
         throw new ApiError(409, "User already exists");
     }
 
+    console.log(req.files);
+
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+    //using classic if else statement to check the cover image local path
+
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
 
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar image is required");
