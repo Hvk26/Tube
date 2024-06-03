@@ -81,7 +81,12 @@ const registerUser = asyncHandler(async (req, res)=>{
 });
 
 const loginUser = asyncHandler(async (req, res)=> {
-
+    // take input from the frontend
+    // validation for empty field
+    // validation of exisisting user in database after decrypting the data i.e. checking the password
+    // send access and refresh tokens
+    // send cookies
+    // take user to the dashboard
 });
 
 export {
