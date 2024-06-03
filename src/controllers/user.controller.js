@@ -124,6 +124,8 @@ const loginUser = asyncHandler(async (req, res)=> {
         throw new ApiError(401, "Invalid password");
     }
 
+    await generateAccessAndRefreshToken(user._id);
+
 });
 
 export {
