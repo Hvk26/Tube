@@ -206,7 +206,7 @@ const refreshAccessToken = asyncHandler(async (req, res)=> {
     } catch (error) {
         throw new ApiError(401, error?.message || "Invalid refresh token")
     }
-}) 
+});
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
 
@@ -230,13 +230,13 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     return res
            .status(200)
            .json(new ApiResponse(200, {}, "Password changed succesfully"));
-})
+});
 
 const getCurrentUser = asyncHandler(async (req, res) => {
     return res
     .status(200)
     .json(new ApiResponse(200, req.user, "current user fetched successfully"));
-})
+});
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
     
@@ -263,7 +263,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     return res
     .status(200)
     .json(new ApiResponse(200, user, "Account details updated successfully"));
-})
+});
 
 const updateAvatarImage = asyncHandler(async (req, res) => {
 
@@ -293,7 +293,7 @@ const updateAvatarImage = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "avatar image updated successfully"));
 
-})
+});
 
 const updateCoverImage = asyncHandler(async (req, res) => {
 
@@ -323,7 +323,7 @@ const updateCoverImage = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "cover image updated successfully"));
 
-})
+});
 
 const getUserChannelProfile = asyncHandler(async (req, res)=> {
 
@@ -393,7 +393,51 @@ const getUserChannelProfile = asyncHandler(async (req, res)=> {
     return res
     .status(200)
     .json(new ApiResponse(200, channel[0]), "User channel fetched succesfully");
-})
+});
+
+const getWatchHistory = asyncHandler(async (req, res) => {
+
+    const user = await User.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {
+            $lookup:{
+                from:"videos",
+                localField: "watchHistory",
+                foreignField: "_id",
+                as: "watchHistory",
+                pipeline:[{
+                    $lookup:{
+                        from:"users",
+                        localField: "owner",
+                        foreignField: "_id",
+                        as: "owner",
+                        pipeline:[
+                            {
+                                $project:{
+                                    fullname: 1,
+                                    username: 1,
+                                    avatar: 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    $addFields:{
+                        owner:{
+                            $first: "$owner"
+                        }
+                    }
+                }
+            ]
+            }
+        }
+    ])
+});
 export {
     registerUser,
     loginUser,
