@@ -1,9 +1,11 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.model.js"
+import {Video} from "../models/video.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose"
 
 const generateAccessAndRefreshToken = async (userId)=>{
     try {
@@ -172,8 +174,7 @@ const logoutUser = asyncHandler(async (req, res)=>{
 });
 
 const refreshAccessToken = asyncHandler(async (req, res)=> {
-    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken;
-
+    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken
     if(!incomingRefreshToken){
         throw new ApiError(401, "Unauthorized request");
     }
