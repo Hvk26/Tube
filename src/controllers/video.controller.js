@@ -23,8 +23,18 @@ const getVideoById = asyncHandler(async (req, res) => {
     //TODO: get video by id
 
     if(!videoId?.trim()){
-        throw new ApiError(404, "Video not found")
+        throw new ApiError(404, "Error finding the video")
     }
+
+    const video =  await Video.findById(videoId.trim());
+
+    if(!video){
+        throw new ApiError(404, "Video is not available")
+    }
+
+    return res.status(200)
+    .json(new ApiResponse(200, video, "Video found successfully"))
+
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
