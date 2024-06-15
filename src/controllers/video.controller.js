@@ -100,6 +100,38 @@ const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
     //TODO: update video details like title, description, thumbnail
 
+    if(!isValidObjectId(videoId)){
+        throw new ApiError(400,"Invalid video id")
+    }
+
+    const {title, description} = req.body;
+
+    if([title, description].some((field)=>field.trim()=== "")){
+        throw new ApiError(400, "All fields are required");
+    }
+
+    const thumbnailLocalPath = req.files?.thumbnail[0].path;
+
+    if(!thumbnailLocalPath){
+        throw new ApiError(404, "Thumbnail local path is required");
+    }
+
+    const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+
+    const video = await Video.findByIdAndUpdate(videoId,{
+        $set:{
+            title: title,
+            description: description,
+            thumbnail: thumbnail.url
+        }
+    },
+        {
+            new:true
+        }
+    )
+
+    return res.status(200)
+    .json(new ApiResponse(200, video, "Video details updated successfully"))
 })
 
 const deleteVideo = asyncHandler(async (req, res) => {
