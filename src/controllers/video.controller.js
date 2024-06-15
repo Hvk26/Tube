@@ -11,11 +11,19 @@ import {uploadOnCloudinary} from "../utils/cloudinary.js"
 const getAllVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query
     //TODO: get all videos based on query, sort, pagination
+
 })
 
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description} = req.body
     // TODO: get video, upload to cloudinary, create video
+
+    // if([title, description].some((field)=>field.trim()=== "")){
+    //     throw new ApiError(400, "All fields are required");
+    // }
+
+    // const videoLocalPath = req.files
+
 })
 
 const getVideoById = asyncHandler(async (req, res) => {
